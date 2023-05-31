@@ -24,70 +24,12 @@ def msg_to_bin(msg):
         return format(msg, "08b")  
     else:  
         raise TypeError("Input type not supported")  
-    
-def read_image(image_path):
-    '''
-    Read image from path
-    
-    Parameters
-    ----------
-    image_path : str
-        Path of the image to be read
-        
-    Returns
-    -------
-    np.ndarray: Image array
-    '''
-    return cv2.imread(image_path)
-
-
-def steganography_image(image,data,shift):
-    '''
-    Embeds data into image
-    
-    Parameters
-    ----------
-    image : np.ndarray
-        Image to be embedded with data
-    data : str
-        Data to be embedded
-    shift : int
-        Shift value to be used for embedding
-        
-    Returns
-    -------
-    np.ndarray: Image array with embedded data
-    '''
-    # Calculate maximum bytes to be embedded
-    max_bytes = image.shape[0] * image.shape[1] * 3 // 8
-    # Check if the number of bytes to be embedded is less than the maximum bytes
-    if len(data) > max_bytes:
-        raise ValueError("Error encountered insufficient bytes, need bigger image or less data !!")
-    # Embed data into image
-    data_index = 0
-    binary_data = msg_to_bin(data)
-    data_len = len(binary_data)
-    for values in image:
-        for pixel in values:
-            r, g, b = msg_to_bin(pixel)
-            if data_index < data_len:
-                pixel[0] = int(r[:-1] + binary_data[data_index], 2)
-                data_index += 1
-            if data_index < data_len:
-                pixel[1] = int(g[:-1] + binary_data[data_index], 2)
-                data_index += 1
-            if data_index < data_len:
-                pixel[2] = int(b[:-1] + binary_data[data_index], 2)
-                data_index += 1
-            if data_index >= data_len:
-                break
-    return image
 
 def decode_binary_string(s):
     decode_text =  ''.join(chr(int(s[i*8:i*8+8],2)) for i in range(len(s)//8))
     return decode_text[:-5]
 
-def steganography_endoce_image(image,data,choose_rgb,shift=3):
+def steganography_endoce_image(image,data,choose_rgb,row_shift=3,column_shift=3):
     '''
     Embeds data into image
     
@@ -99,8 +41,10 @@ def steganography_endoce_image(image,data,choose_rgb,shift=3):
         Data to be embedded
     choose_rgb : int
         Choose which rgb to be embedded(0:R,1:G,2:B)
-    shift : int
-        Shift value to be used for embedding
+    row_shift : int
+        Row shift value to be used for embedding
+    column_shift : int
+        Column shift value to be used for embedding
         
     Returns
     -------
@@ -108,18 +52,18 @@ def steganography_endoce_image(image,data,choose_rgb,shift=3):
     '''
 
     copy_image = image.copy()
+    data += "#####"
     # Calculate maximum bytes to be embedded
-    max_bytes = ((copy_image.shape[0] * copy_image.shape[1] // 8) / shift) - 5
+    max_bytes = ((copy_image.shape[0]/row_shift) * (copy_image.shape[1]/column_shift) // 8)
     # Check if the number of bytes to be embedded is less than the maximum bytes
     if len(data) > max_bytes:
         raise ValueError("Error encountered insufficient bytes, need bigger image or less data !!")
     # Embed data into image
     data_index = 0
-    data += "#####"
     binary_data = msg_to_bin(data)
     data_len = len(binary_data)
-    for i in range(copy_image.shape[0]):
-        for j in range(0,copy_image.shape[1],shift):
+    for i in range(0,copy_image.shape[0],row_shift):
+        for j in range(0,copy_image.shape[1],column_shift):
 
             rgb = msg_to_bin(copy_image[i][j][choose_rgb])
             if data_index < data_len:
@@ -134,9 +78,11 @@ def steganography_endoce_image(image,data,choose_rgb,shift=3):
             if data_index >= data_len:
                 break
 
+    cv2.imwrite("photo/encryption_image.jpg", copy_image)
+
     return copy_image
 
-def steganography_decode_image(image,choose_rgb,shift):
+def steganography_decode_image(image,choose_rgb,row_shift,column_shift):
     '''
     Extracts data from image
     
@@ -155,8 +101,8 @@ def steganography_decode_image(image,choose_rgb,shift):
     '''
     copy_image = image.copy()
     binary_data = ""
-    for i in range(copy_image.shape[0]):
-        for j in range(0,copy_image.shape[1],shift):
+    for i in range(0,copy_image.shape[0],row_shift):
+        for j in range(0,copy_image.shape[1],column_shift):
             rgb = msg_to_bin(copy_image[i][j][choose_rgb])
             binary_data += rgb[-1]
             # print(binary_data)
@@ -166,11 +112,11 @@ def steganography_decode_image(image,choose_rgb,shift):
 
 def main():
     original_image = cv2.imread('photo/windows.jpg')
-    stegano_image = steganography_endoce_image(image=original_image,data="Hello World Enes Geliyor",choose_rgb=1,shift=5)
+    stegano_image = steganography_endoce_image(image=original_image,data="Hello World",choose_rgb=1,row_shift=216,column_shift=21)
     # cv2.imshow("Original image",original_image)
     # cv2.imshow("Steganography image",stegano_image)
     print((original_image==stegano_image).all())
-    decode_data = steganography_decode_image(image=stegano_image,choose_rgb=1,shift=5)
+    decode_data = steganography_decode_image(image=stegano_image,choose_rgb=1,row_shift=216,column_shift=21)
     print(decode_data)
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
