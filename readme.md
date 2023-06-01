@@ -4,6 +4,8 @@
 |-|-|
 |Enes Doğan ŞANLI|21501081|
 
+Bu proje kapsamında image steganography üzerine çalışılmıştır. Temel olarak LSB metotu kullanılmıştır. Lakin bu uygulamada sıralı bir veri gizleme işlemi yerine çok daha karmaşık ve kullanıcıya alternatif sunan bir yapı geliştirilmiştir. Kullanıcı seçmiş olduğu RGB değeri ile verinin hangi renk gamasına saklanabileceğini seçmektedir. Aynı zaman girilen Row Shift ve Column Shift değerlerine göre veri gizleme sırası kaydırmalı bir yapı haline getirilmiştir. İçerisine veri gizlenmiş resim üzerinden gizlenmiş veriyi okumakta mümkündür. Ama bunun için Choose RGB, Row Shift ve Column Shift değerlerinin bilinmesi gerekmektedir. Bu hali ile uygulama Caesar Cipher uygulamasına benzer bir mantıkta çalışmaktadır.
+
 ## Contents
 - [Image Steganography](#image-steganography)
   - [Contents](#contents)
@@ -49,7 +51,7 @@ Bu bölümde sisteme girdi olarak Image Path Encryption, Data, Choose RGB, Row S
 #### Inputs
 * Image Path Encryption 
 * Data
-* Choose RGB (0 : Red, 1: Green, 2: Blue)|
+* Choose RGB (0 : Red, 1: Green, 2: Blue)
 * Row Shift (int)
 * Column Shift (int)
 
@@ -65,7 +67,7 @@ Bu bölümde sisteme girdi olarak Image Path Decryption, Choose RGB, Row Shift, 
 
 #### Inputs
 * Image Path Encryption 
-* Choose RGB (0 : Red, 1: Green, 2: Blue)|
+* Choose RGB (0 : Red, 1: Green, 2: Blue)
 * Row Shift (int)
 * Column Shift (int)
 
@@ -79,6 +81,7 @@ Bu bölümde sisteme girdi olarak Image Path Decryption, Choose RGB, Row Shift, 
 
 * Seçilen shift değerlerine göre gizlenebilen mesaj boyutu kısalmaktadır.
 * Türkçe karekterler desteklenmemektedir.
+* Veri gizlemede kullanılacak olan resim formatı PNG olmalıdır.
 
 ## Future Work
 
@@ -94,6 +97,4 @@ Bu çalışma kapsamında ileri düzeyde LSB (Least Significant Bit Insertion Me
 * https://www.geeksforgeeks.org/image-based-steganography-using-python/
 * https://www.javatpoint.com/image-steganography-using-python
 * https://towardsdatascience.com/hiding-data-in-an-image-image-steganography-using-python-e491b68b1372
-* https://github.com/LucaAngioloni/Image_Steganography/blob/master/Image_Steganography.py
-* https://github.com/Sanjipan/Steganography/tree/master
 * https://betterprogramming.pub/image-steganography-using-python-2250896e48b9
