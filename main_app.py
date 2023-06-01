@@ -25,7 +25,7 @@ with gradio.Blocks() as demo:
         with gradio.Row():
             with gradio.Column():
                 image_path_for_encryption = gradio.Textbox(
-                    label="Image path",
+                    label="Image path encryption",
                     placeholder=
                     "Enter the image path")
                 data_for_encryption = gradio.Textbox(
@@ -50,7 +50,7 @@ with gradio.Blocks() as demo:
         with gradio.Row():
             with gradio.Column():
                 image_path_for_decryption = gradio.Textbox(
-                    label="Image path",
+                    label="Image path decryption",
                     placeholder="Enter the image path...")
                 choose_rgb_for_decryption = gradio.Number(
                     label="Choose RGB")
