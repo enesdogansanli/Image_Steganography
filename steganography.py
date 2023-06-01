@@ -29,7 +29,7 @@ def decode_binary_string(s):
     decode_text =  ''.join(chr(int(s[i*8:i*8+8],2)) for i in range(len(s)//8))
     return decode_text[:-5]
 
-def steganography_endoce_image(image,data,choose_rgb,row_shift=3,column_shift=3):
+def steganography_endoce_image(image,data,choose_rgb,row_shift,column_shift):
     '''
     Embeds data into image
     
@@ -78,7 +78,7 @@ def steganography_endoce_image(image,data,choose_rgb,row_shift=3,column_shift=3)
             if data_index >= data_len:
                 break
 
-    cv2.imwrite("photo/encryption_image.jpg", copy_image)
+    cv2.imwrite("photo/enc_image.png", copy_image)
 
     return copy_image
 
@@ -111,12 +111,12 @@ def steganography_decode_image(image,choose_rgb,row_shift,column_shift):
                 return  decode_text_data
 
 def main():
-    original_image = cv2.imread('photo/windows.jpg')
-    stegano_image = steganography_endoce_image(image=original_image,data="Hello World",choose_rgb=1,row_shift=216,column_shift=21)
+    original_image = cv2.imread('photo/windows.png')
+    stegano_image = steganography_endoce_image(image=original_image,data="Hello World New Data",choose_rgb=1,row_shift=1,column_shift=3)
     # cv2.imshow("Original image",original_image)
     # cv2.imshow("Steganography image",stegano_image)
     print((original_image==stegano_image).all())
-    decode_data = steganography_decode_image(image=stegano_image,choose_rgb=1,row_shift=216,column_shift=21)
+    decode_data = steganography_decode_image(image=stegano_image,choose_rgb=1,row_shift=1,column_shift=3)
     print(decode_data)
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
