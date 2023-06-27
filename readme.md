@@ -1,9 +1,5 @@
 # Image Steganography
 
-|Ad-Soyad|Öğrenci Numarası|
-|-|-|
-|Enes Doğan ŞANLI|21501081|
-
 Bu proje kapsamında image steganography üzerine çalışılmıştır. Temel olarak LSB metotu kullanılmıştır. Lakin bu uygulamada sıralı bir veri gizleme işlemi yerine çok daha karmaşık ve kullanıcıya alternatif sunan bir yapı geliştirilmiştir. Kullanıcı seçmiş olduğu RGB değeri ile verinin hangi renk gamasına saklanabileceğini seçmektedir. Aynı zaman girilen Row Shift ve Column Shift değerlerine göre veri gizleme sırası kaydırmalı bir yapı haline getirilmiştir. İçerisine veri gizlenmiş resim üzerinden gizlenmiş veriyi okumakta mümkündür. Ama bunun için Choose RGB, Row Shift ve Column Shift değerlerinin bilinmesi gerekmektedir. Bu hali ile uygulama Caesar Cipher uygulamasına benzer bir mantıkta çalışmaktadır.
 
 ## Contents
