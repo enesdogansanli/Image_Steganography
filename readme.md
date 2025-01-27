@@ -55,7 +55,7 @@ Bu bölümde sisteme girdi olarak Image Path Encryption, Data, Choose RGB, Row S
 
 * Image
   
-![](photo/App_Enc.PNG)
+![](docs/photo/App_Enc.PNG)
 
 ### Decryption
 
@@ -71,7 +71,7 @@ Bu bölümde sisteme girdi olarak Image Path Decryption, Choose RGB, Row Shift, 
 
 * Text (Decrypted)
 
-![](photo/App_Dec.PNG)
+![](docs/photo/App_Dec.PNG)
 
 ## Constraints
 
